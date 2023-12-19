@@ -23,14 +23,14 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: "Vite PWA React MUI",
-        short_name: "Vite PWA",
+        name: 'Countries Catalog | Vite PWA React MUI',
+        short_name: 'Countries Cat.',
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',
         lang: 'en',
         scope: '/',
-        description: "Vite PWA React MUI Boilerplate",
+        description: `Countries Catalog built with Vite PWA React MUI Boilerplate`,
         theme_color: '#111111',
         icons: [
           {

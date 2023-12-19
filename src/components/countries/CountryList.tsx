@@ -1,7 +1,7 @@
 import { useBreakpoint } from '@/libs/useBreakpoint';
 import { Country, useCountry } from '@/libs/useCountry';
 import { useAppStore } from '@/stores/useAppStore';
-import { Box, CircularProgress, Divider, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 import CountryCard from './CountryCard';
 import CountryDialog from './CountryDialog';
@@ -43,7 +43,7 @@ const CountryList: React.FC = () => {
           top: 56,
           zIndex: 10,
           pt: { xs: 3, sm: 4, md: 6 },
-          pb: { xs: 2, sm: 4 },
+          pb: { xs: 1 },
           px: { xs: 0, sm: 2 },
         }}
       >
@@ -68,8 +68,6 @@ const CountryList: React.FC = () => {
             </Box>
           )}
         </Box>
-
-        <Divider sx={{ maxWidth: 900, mx: 'auto' }} />
       </Box>
 
       <Box

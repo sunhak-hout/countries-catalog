@@ -24,7 +24,7 @@ const AppBarCustom: React.FC<Props> = (props) => {
       sx={{ bgcolor: 'background.paper' }}
       elevation={2}
     >
-      <Container>
+      <Container sx={{ px: { xs: 0 } }}>
         <Toolbar>
           <Box sx={{ flex: 1, mr: 1 }}>{props.leading}</Box>
           <Box sx={{ flex: 3, textAlign: 'center' }}>
