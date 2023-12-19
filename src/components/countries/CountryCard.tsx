@@ -1,3 +1,4 @@
+import { useBreakpoint } from '@/libs/useBreakpoint';
 import { Country } from '@/libs/useCountry';
 import { Box, Grid, Paper, Typography } from '@mui/material';
 
@@ -7,6 +8,8 @@ interface Props {
 }
 
 const CountryCard: React.FC<Props> = ({ country, onClick }) => {
+  const sm = useBreakpoint('sm');
+
   return (
     <Paper
       sx={{
@@ -18,7 +21,7 @@ const CountryCard: React.FC<Props> = ({ country, onClick }) => {
       }}
       onClick={() => onClick(country)}
     >
-      <Grid container spacing={4}>
+      <Grid container spacing={sm ? 4 : 1}>
         <Grid item xs={12} sm={4}>
           <Box
             width="100%"
@@ -34,7 +37,7 @@ const CountryCard: React.FC<Props> = ({ country, onClick }) => {
             <Typography variant="h6">{country.name.official}</Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Typography variant="caption">Country Code</Typography>
+                <Typography variant="caption">Country Code:</Typography>
                 <Typography>
                   {country.cca2}, {country.cca3}
                 </Typography>
@@ -56,7 +59,7 @@ const CountryCard: React.FC<Props> = ({ country, onClick }) => {
                 <Typography
                   textOverflow="ellipsis"
                   overflow="hidden"
-                  whiteSpace="nowrap"
+                  whiteSpace={sm ? 'nowrap' : 'unset'}
                 >
                   {Object.values(country.name.nativeName || {})
                     .map(({ common }) => common)
@@ -70,7 +73,7 @@ const CountryCard: React.FC<Props> = ({ country, onClick }) => {
                 <Typography
                   textOverflow="ellipsis"
                   overflow="hidden"
-                  whiteSpace="nowrap"
+                  whiteSpace={sm ? 'nowrap' : 'unset'}
                 >
                   {country.altSpellings.join(', ')}
                 </Typography>

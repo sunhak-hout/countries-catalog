@@ -17,7 +17,6 @@ const App: React.FC = () => {
   const theme = useMemo(() => {
     const isDarkMode = getDisplayMode(displayMode) === 'dark';
     const activeTheme = isDarkMode ? darkTheme : lightTheme;
-    console.log(activeTheme);
     document
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute('content', activeTheme.palette.background.paper);

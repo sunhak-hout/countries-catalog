@@ -1,3 +1,4 @@
+import { useBreakpoint } from '@/libs/useBreakpoint';
 import { Country } from '@/libs/useCountry';
 import {
   Box,
@@ -18,6 +19,8 @@ interface Props {
 }
 
 const CountryDialog: React.FC<Props> = ({ open, onClose, country }) => {
+  const xs = useBreakpoint('xs');
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{country.name.official}</DialogTitle>
@@ -30,10 +33,11 @@ const CountryDialog: React.FC<Props> = ({ open, onClose, country }) => {
           sx={{ aspectRatio: { xs: '5/3' }, objectFit: 'cover' }}
           src={country.flags.png}
           alt={country.name.official}
+          mb={1}
         />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Typography variant="caption">Country Code</Typography>
+            <Typography variant="caption">Country Code:</Typography>
             <Typography>
               {country.cca2}, {country.cca3}
             </Typography>
@@ -43,16 +47,16 @@ const CountryDialog: React.FC<Props> = ({ open, onClose, country }) => {
             <Typography
               textOverflow="ellipsis"
               overflow="hidden"
-              whiteSpace="nowrap"
+              whiteSpace={xs ? 'nowrap' : 'unset'}
             >
-              {(country.idd.suffixes || [])
-                .map((suffix) => `${country.idd.root}${suffix}`)
+              {(country.idd?.suffixes || [])
+                .map((suffix) => `${country.idd?.root}${suffix}`)
                 .join(', ') || 'N/A'}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="caption">Capital:</Typography>
-            <Typography>{country.capital[0]}</Typography>
+            <Typography>{country.capital?.join(', ')}</Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="caption">Region:</Typography>
@@ -64,7 +68,9 @@ const CountryDialog: React.FC<Props> = ({ open, onClose, country }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="caption">Languages:</Typography>
-            <Typography>{country.languages.eng}</Typography>
+            <Typography>
+              {Object.values(country.languages).join(', ')}
+            </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="caption">Population:</Typography>
@@ -77,16 +83,17 @@ const CountryDialog: React.FC<Props> = ({ open, onClose, country }) => {
           <Grid item xs={12} sm={6}>
             <Typography variant="caption">Demonyms:</Typography>
             <Typography>
-              Female: {country.demonyms.eng.f}, Male: {country.demonyms.eng.m}
+              Female: {country.demonyms?.eng?.f}, Male:{' '}
+              {country.demonyms?.eng?.m}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="caption">Timezones:</Typography>
-            <Typography>{country.timezones.join(', ')}</Typography>
+            <Typography>{country.timezones?.join(', ')}</Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="caption">Continents:</Typography>
-            <Typography>{country.continents.join(', ')}</Typography>
+            <Typography>{country.continents?.join(', ')}</Typography>
           </Grid>
         </Grid>
       </DialogContent>

@@ -1,4 +1,11 @@
-import { AppBar, Box, Grow, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Container,
+  Grow,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -17,7 +24,7 @@ const AppBarCustom: React.FC<Props> = (props) => {
       sx={{ bgcolor: 'background.paper' }}
       elevation={2}
     >
-      <Box sx={{ width: '100%', maxWidth: 900, mx: 'auto' }}>
+      <Container>
         <Toolbar>
           <Box sx={{ flex: 1, mr: 1 }}>{props.leading}</Box>
           <Box sx={{ flex: 3, textAlign: 'center' }}>
@@ -58,7 +65,7 @@ const AppBarCustom: React.FC<Props> = (props) => {
           </Box>
         </Toolbar>
         {props.children}
-      </Box>
+      </Container>
     </AppBar>
   );
 };

@@ -1,66 +1,30 @@
 import { useBreakpoint } from '@/libs/useBreakpoint';
-import { Country, CountrySort, useCountry } from '@/libs/useCountry';
-import { ImportExportOutlined } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Pagination,
-  PaginationProps,
-  TextField,
-  TextFieldProps,
-  Typography,
-  debounce,
-} from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { Country, useCountry } from '@/libs/useCountry';
+import { useAppStore } from '@/stores/useAppStore';
+import { Box, CircularProgress, Divider, Typography } from '@mui/material';
+import { useState } from 'react';
 import CountryCard from './CountryCard';
 import CountryDialog from './CountryDialog';
+import CountryPagination from './CountryPagination';
+import CountrySearchBox from './CountrySearchBox';
+import CountrySortBy from './CountrySortBy';
 
-const LIMIT = 25;
 const CountryList: React.FC = () => {
+  const [countryFilter] = useAppStore((state) => [state.countryFilter]);
+
   const [dialog, setDialog] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-  const [sort, setSort] = useState<CountrySort>('none');
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
 
-  const md = useBreakpoint('md');
   const sm = useBreakpoint('sm');
 
   const { count, data, loading, error } = useCountry({
-    search,
-    limit: LIMIT,
-    offset: (page - 1) * LIMIT,
-    sort,
+    search: countryFilter.search,
+    limit: countryFilter.limit,
+    offset: (countryFilter.page - 1) * countryFilter.limit,
+    sort: countryFilter.sort,
   });
 
-  const pageCount = useMemo(() => {
-    return Math.ceil(count / LIMIT);
-  }, [count]);
-
-  const handleChangeSearch: TextFieldProps['onChange'] = (e) => {
-    setPage(1);
-    setSearch(e.target.value);
-  };
-
-  const handleChangeSearchDebounce = useCallback(
-    debounce(handleChangeSearch, 400),
-    [],
-  );
-
-  const handleToggleSort = () => {
-    setSort((prev) =>
-      prev === 'asc' ? 'desc' : prev === 'desc' ? 'none' : 'asc',
-    );
-  };
-
-  const handleChangePage: PaginationProps['onChange'] = (e, newPage) => {
-    setPage(newPage);
-  };
-
   const handleClickCountry = (country: Country) => {
-    console.log({ dialog, selectedCountry });
     setDialog(true);
     setSelectedCountry(country);
   };
@@ -72,49 +36,25 @@ const CountryList: React.FC = () => {
 
   return (
     <>
-      <Container
+      <Box
         sx={{
           bgcolor: 'background.paper',
           position: 'sticky',
           top: 56,
           zIndex: 10,
           pt: { xs: 3, sm: 4, md: 6 },
-          pb: { xs: 2, md: 4 },
+          pb: { xs: 2, sm: 4 },
           px: { xs: 0, sm: 2 },
         }}
       >
         <Box sx={{ maxWidth: 900, mx: 'auto', px: { xs: 2, sm: 0 } }}>
-          <TextField
-            size={md ? 'medium' : 'small'}
-            placeholder="Type to search..."
-            fullWidth
-            defaultValue={search}
-            onChange={handleChangeSearchDebounce}
-          />
+          <CountrySearchBox />
 
           <Box display="flex" alignItems="center" py={{ xs: 2, md: 3 }}>
-            <Button
-              variant="outlined"
-              startIcon={<ImportExportOutlined />}
-              onClick={handleToggleSort}
-              sx={{ textTransform: 'none' }}
-              color={sort === 'none' ? 'inherit' : 'primary'}
-            >
-              Sort By: {sort.toUpperCase()}
-            </Button>
+            <CountrySortBy />
 
             <Typography sx={{ ml: 'auto', mr: 1 }}>(Total: {count})</Typography>
-            {sm && (
-              <Pagination
-                onChange={handleChangePage}
-                count={pageCount}
-                page={page}
-                siblingCount={1}
-                boundaryCount={1}
-                shape="rounded"
-                color="primary"
-              />
-            )}
+            {sm && <CountryPagination itemCount={count} />}
           </Box>
 
           {!sm && (
@@ -124,26 +64,24 @@ const CountryList: React.FC = () => {
               alignItems="center"
               pb={2}
             >
-              <Pagination
-                onChange={handleChangePage}
-                count={pageCount}
-                page={page}
-                siblingCount={1}
-                boundaryCount={1}
-                shape="rounded"
-                color="primary"
-              />
+              <CountryPagination itemCount={count} />
             </Box>
           )}
         </Box>
 
-        {!sm && <Divider />}
-      </Container>
+        <Divider sx={{ maxWidth: 900, mx: 'auto' }} />
+      </Box>
 
       <Box
         sx={{ mx: 'auto', width: '100%', maxWidth: 900, position: 'relative' }}
       >
         <Box sx={{ mt: 10 }}>
+          {loading && data.length === 0 && (
+            <Box py={10} textAlign="center">
+              <CircularProgress />
+            </Box>
+          )}
+
           {!loading && data.length === 0 && (
             <Box py={10}>
               <Typography
