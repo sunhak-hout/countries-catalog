@@ -1,4 +1,5 @@
 import useAxios from 'axios-hooks';
+import Fuse from 'fuse.js';
 import { useMemo } from 'react';
 
 export interface Country {
@@ -35,18 +36,28 @@ export const useCountry = (props: Props) => {
   const { search = '', limit = 25, offset = 0 } = props;
 
   const [result] = useAxios<Country[]>({
-    url: search
-      ? `https://restcountries.com/v3.1/name/${search}?fullText=true`
-      : `https://restcountries.com/v3.1/all`,
+    url: `https://restcountries.com/v3.1/all`,
   });
 
+  const countryData = result.data || [];
+
+  const fuzzyCountryData = useMemo(
+    () => new Fuse(countryData, { keys: ['name.official'] }),
+    [countryData],
+  );
+
+  const searchCountries = useMemo(() => {
+    return search
+      ? fuzzyCountryData.search(search).map((fuzzy) => fuzzy.item)
+      : countryData;
+  }, [search, fuzzyCountryData]);
+
   const data = useMemo(() => {
-    const resultData = result.data || [];
-    return [...resultData].slice(offset, offset + limit);
-  }, [limit, offset, result.data]);
+    return searchCountries.slice(offset, offset + limit);
+  }, [limit, offset, searchCountries]);
 
   return {
-    count: result.data?.length || 0,
+    count: searchCountries.length || 0,
     data,
     loading: result.loading,
     error: result.error,

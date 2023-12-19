@@ -9,9 +9,11 @@ import {
   PaginationProps,
   Stack,
   TextField,
+  TextFieldProps,
   Typography,
+  debounce,
 } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import CountryCard from './CountryCard';
 
 const LIMIT = 25;
@@ -30,6 +32,15 @@ const CountryList: React.FC = () => {
   }, [count]);
 
   console.log({ loading, error });
+
+  const handleChangeSearch: TextFieldProps['onChange'] = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleChangeSearchDebounce = useCallback(
+    debounce(handleChangeSearch, 400),
+    [],
+  );
 
   const handleChangePage: PaginationProps['onChange'] = (e, newPage) => {
     setPage(newPage);
@@ -51,16 +62,11 @@ const CountryList: React.FC = () => {
           <TextField
             placeholder="Type to search..."
             fullWidth
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            defaultValue={search}
+            onChange={handleChangeSearchDebounce}
           />
 
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            py={3}
-          >
+          <Box display="flex" alignItems="center" py={3}>
             <Stack direction="row" alignItems="center">
               <Typography sx={{ mr: 1 }}>Sort By: </Typography>
               <ButtonGroup>
@@ -69,6 +75,7 @@ const CountryList: React.FC = () => {
               </ButtonGroup>
             </Stack>
 
+            <Typography sx={{ ml: 'auto', mr: 1 }}>(Total: {count})</Typography>
             <Pagination
               onChange={handleChangePage}
               count={pageCount}
