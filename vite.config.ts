@@ -6,8 +6,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  base: '/countries-catalog/',
+export default defineConfig(({ command }) => ({
+  base: command === 'serve' ? '/' : '/countries-catalog/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -76,4 +76,4 @@ export default defineConfig({
       },
     }),
   ],
-});
+}));

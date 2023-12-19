@@ -1,6 +1,12 @@
 import { useBreakpoint } from '@/libs/useBreakpoint';
 import { useAppStore } from '@/stores/useAppStore';
-import { TextField, TextFieldProps, debounce } from '@mui/material';
+import { SearchOutlined } from '@mui/icons-material';
+import {
+  InputAdornment,
+  TextField,
+  TextFieldProps,
+  debounce,
+} from '@mui/material';
 import { useCallback } from 'react';
 
 const CountrySearchBox: React.FC = () => {
@@ -27,10 +33,17 @@ const CountrySearchBox: React.FC = () => {
   return (
     <TextField
       size={md ? 'medium' : 'small'}
-      placeholder="Type to search..."
+      placeholder="Type to fuzzy search..."
       fullWidth
       defaultValue={countryFilter.search}
       onChange={handleChangeSearchDebounce}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchOutlined />
+          </InputAdornment>
+        ),
+      }}
     />
   );
 };

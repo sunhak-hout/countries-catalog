@@ -1,27 +1,45 @@
-# React + TypeScript + Vite
+# Countries Catalog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Countries Catalog repository! This project is a web application built to provide information about various countries. It utilizes modern web technologies such as Vite, React, PWA (Progressive Web App), and Material UI to deliver a fast, responsive, and user-friendly experience.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [License](#license)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Country Information:** View detailed information about different countries, including population, area, languages, and more.
+- **Search and Sort:** Easily search for specific countries or sort them based on various criteria.
+- **Responsive Design:** The application is designed to be responsive and work seamlessly across different devices.
+- **Progressive Web App (PWA):** Install the application on your device for an enhanced offline experience.
+- **Material UI:** The user interface is built using Material UI components for a clean and modern look.
+- **Dark Mode Support:** Toggle between light and dark modes for a personalized viewing experience.
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- **Vite:** A fast build tool that significantly improves the development experience for web projects.
+- **React:** A popular JavaScript library for building user interfaces.
+- **PWA (Progressive Web App):** Enhance the user experience with features like offline access and improved performance.
+- **Material UI:** A React UI framework that provides a set of customizable and accessible components.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Getting Started
+
+Follow these steps to set up the project locally:
+
+1. Clone the repository: `git clone https://github.com/sunhak-hout/countries-catalog.git`
+2. Navigate to the project directory: `cd countries-catalog`
+3. Install dependencies: `npm install`
+4. Start the development server: `npm run dev`
+5. Open your browser and visit `http://localhost:3000` to view the application.
+
+## Usage
+
+Once the development server is running, you can explore the Countries Catalog by visiting the provided URL. Use the search and sort features to find specific countries and access detailed information about them.
+
+## License
+
+This project is licensed under the MIT License. Feel free to use and modify the code as per the license terms.
