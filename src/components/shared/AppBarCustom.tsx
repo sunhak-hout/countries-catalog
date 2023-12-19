@@ -14,10 +14,10 @@ const AppBarCustom: React.FC<Props> = (props) => {
   return (
     <AppBar
       color="transparent"
-      sx={{ bgcolor: ({ palette }) => `${palette.background.paper}F5` }}
+      sx={{ bgcolor: 'background.paper' }}
       elevation={2}
     >
-      <Box>
+      <Box sx={{ width: '100%', maxWidth: 900, mx: 'auto' }}>
         <Toolbar>
           <Box sx={{ flex: 1, mr: 1 }}>{props.leading}</Box>
           <Box sx={{ flex: 3, textAlign: 'center' }}>
