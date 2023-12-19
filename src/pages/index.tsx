@@ -16,7 +16,7 @@ const PageRoot: React.FC = () => {
         }
         trailing={<DisplayModeMenu />}
       />
-      <Box sx={{ minHeight: '100vh' }}>
+      <Box sx={{ minHeight: '100vh', pb: 5 }}>
         <CountryList />
       </Box>
     </>

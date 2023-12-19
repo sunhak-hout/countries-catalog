@@ -1,5 +1,6 @@
 import useAxios from 'axios-hooks';
 import Fuse from 'fuse.js';
+import _orderBy from 'lodash/orderBy';
 import { useMemo } from 'react';
 
 export interface Country {
@@ -26,15 +27,23 @@ export interface Country {
   };
 }
 
+export type CountrySort = 'asc' | 'desc' | 'none';
+
 interface Props {
   search?: string;
   limit?: number;
   offset?: number;
+  sort?: CountrySort;
 }
 
-export const useCountry = (props: Props) => {
-  const { search = '', limit = 25, offset = 0 } = props;
+export const COUNTRY_DEFAULT_LIMIT = 25;
 
+export const useCountry = ({
+  search = '',
+  limit = COUNTRY_DEFAULT_LIMIT,
+  offset = 0,
+  sort = 'asc',
+}: Props) => {
   const [result] = useAxios<Country[]>({
     url: `https://restcountries.com/v3.1/all`,
   });
@@ -47,10 +56,13 @@ export const useCountry = (props: Props) => {
   );
 
   const searchCountries = useMemo(() => {
-    return search
+    const countries = search
       ? fuzzyCountryData.search(search).map((fuzzy) => fuzzy.item)
       : countryData;
-  }, [search, fuzzyCountryData]);
+    return sort === 'none'
+      ? countries
+      : _orderBy(countries, 'name.official', sort);
+  }, [sort, search, fuzzyCountryData]);
 
   const data = useMemo(() => {
     return searchCountries.slice(offset, offset + limit);
