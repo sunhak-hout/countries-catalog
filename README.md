@@ -15,8 +15,6 @@ Welcome to the Countries Catalog repository! This project is a web application b
 - **Country Information:** View detailed information about different countries, including population, area, languages, and more.
 - **Search and Sort:** Easily search for specific countries or sort them based on various criteria.
 - **Responsive Design:** The application is designed to be responsive and work seamlessly across different devices.
-- **Progressive Web App (PWA):** Install the application on your device for an enhanced offline experience.
-- **Material UI:** The user interface is built using Material UI components for a clean and modern look.
 - **Dark Mode Support:** Toggle between light and dark modes for a personalized viewing experience.
 
 ## Tech Stack
